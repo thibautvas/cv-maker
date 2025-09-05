@@ -18,8 +18,7 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          inherit (pkgs.stdenv) isLinux;
-          pdfReader = if isLinux then "evince" else "open";
+          openCmd = if pkgs.stdenv.isDarwin then "open" else "xdg-open";
           tex = (
             pkgs.texlive.combine {
               inherit (pkgs.texlive)
@@ -28,21 +27,20 @@
                 eurosym
                 fontawesome
                 ragged2e
-                titlesec
-                xcolor;
+                titlesec;
             }
           );
         in
         {
           default = pkgs.writeShellApplication {
             name = "mkpdf";
-            runtimeInputs = [ tex ] ++ lib.optionals isLinux [ pkgs.evince ];
+            runtimeInputs = [ tex ];
             text = ''
               input_tex="$1"
               output_pdf="output/''${input_tex%.tex}.pdf"
               mkdir -p output
               pdflatex --output-directory=output "$input_tex" &&
-              ${pdfReader} "$output_pdf"
+              ${openCmd} "$output_pdf"
             '';
           };
         }

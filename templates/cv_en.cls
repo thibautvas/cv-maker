@@ -11,7 +11,6 @@
 \RequirePackage{hyperref}
 \RequirePackage{ragged2e}
 \RequirePackage{titlesec}
-\RequirePackage{xcolor}
 
 
 \titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule]
@@ -33,9 +32,8 @@
   \centerline{\Huge{#1}}
 }
 
-\definecolor{lightblue}{RGB}{173, 216, 230} % light blue color
 \newcommand{\boxedlink}[2]{%
-  \href{#1}{\fcolorbox{lightblue}{white}{\textcolor{black}{#2}}}%
+  \href{#1}{#2}%
 }
 
 \newcommand{\contact}[3]{%
@@ -106,5 +104,17 @@
     \item #3
     \item #4
     \item #5
+  \end{itemize}%
+}
+
+\newcommand{\sixitems}[6]{%
+  \begin{itemize}[leftmargin=*,label={}]
+    \itemsep0em
+    \item #1
+    \item #2
+    \item #3
+    \item #4
+    \item #5
+    \item #6
   \end{itemize}%
 }
