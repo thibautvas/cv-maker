@@ -7,17 +7,13 @@
     { self, nixpkgs }:
     let
       inherit (nixpkgs) lib;
-      allSystems = [
-        "x86_64-linux"
-        "aarch64-darwin"
-      ];
-      forAllSystems = f: lib.genAttrs allSystems f;
-    in
-    {
-      packages = forAllSystems (
+      forAllSystems = lib.genAttrs lib.systems.flakeExposed;
+
+      mkPackage =
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          name = "mkpdf";
           openCmd = if pkgs.stdenv.isDarwin then "open" else "xdg-open";
           tex = (
             pkgs.texlive.combine {
@@ -27,13 +23,14 @@
                 eurosym
                 fontawesome
                 ragged2e
-                titlesec;
+                titlesec
+                ;
             }
           );
         in
-        {
-          default = pkgs.writeShellApplication {
-            name = "mkpdf";
+        rec {
+          pack = pkgs.writeShellApplication {
+            inherit name;
             runtimeInputs = [ tex ];
             text = ''
               input_tex="$1"
@@ -43,21 +40,21 @@
               ${openCmd} "$output_pdf"
             '';
           };
-        }
-      );
 
-      devShells = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-          tex = self.packages.${system}.default;
-        in
-        {
-          default = pkgs.mkShell {
-            name = "texlive";
-            packages = [ tex ];
+          dev = pkgs.mkShell {
+            inherit name;
+            packages = [ pack ];
           };
-        }
-      );
+        };
+
+    in
+    {
+      devShells = forAllSystems (system: {
+        default = (mkPackage system).dev;
+      });
+
+      packages = forAllSystems (system: {
+        default = (mkPackage system).pack;
+      });
     };
 }
