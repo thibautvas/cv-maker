@@ -1,0 +1,28 @@
+name: build cv
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: install nix
+        uses: cachix/install-nix-action@v25
+
+      - name: build cv pdf
+        run: nix run . -- cv_thibautvas.tex
+
+      - name: upload pdf
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv_thibautvas
+          path: output/cv_thibautvas.pdf
+          retention-days: 1
