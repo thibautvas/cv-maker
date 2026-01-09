@@ -8,53 +8,49 @@
     let
       inherit (nixpkgs) lib;
       forAllSystems = lib.genAttrs lib.systems.flakeExposed;
+      systemOutputs = forAllSystems mkOutputs;
 
-      mkPackage =
+      mkApp = drv: {
+        type = "app";
+        program = lib.getExe drv;
+      };
+
+      mkOutputs =
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          name = "mkpdf";
-          openCmd = if pkgs.stdenv.isDarwin then "open" else "xdg-open";
-          tex = (
-            pkgs.texlive.combine {
-              inherit (pkgs.texlive)
-                scheme-small
-                enumitem
-                eurosym
-                fontawesome
-                ragged2e
-                titlesec
-                ;
-            }
-          );
-        in
-        rec {
-          pack = pkgs.writeShellApplication {
-            inherit name;
-            runtimeInputs = [ tex ];
+
+          shellApp = pkgs.writeShellApplication {
+            name = "mkpdf";
+            runtimeInputs = [
+              (pkgs.texlive.combine {
+                inherit (pkgs.texlive)
+                  scheme-small
+                  enumitem
+                  eurosym
+                  fontawesome
+                  ragged2e
+                  titlesec
+                  ;
+              })
+            ];
             text = ''
               input_tex="$1"
-              output_pdf="output/''${input_tex%.tex}.pdf"
               mkdir -p output
-              pdflatex --output-directory=output "$input_tex" &&
-              ${openCmd} "$output_pdf"
+              pdflatex --output-directory=output "$input_tex"
             '';
           };
-
-          dev = pkgs.mkShell {
-            inherit name;
-            packages = [ pack ];
+        in
+        {
+          apps.default = mkApp shellApp;
+          devShell = pkgs.mkShell {
+            packages = [ shellApp ];
           };
         };
 
     in
     {
-      devShells = forAllSystems (system: {
-        default = (mkPackage system).dev;
-      });
-
-      packages = forAllSystems (system: {
-        default = (mkPackage system).pack;
-      });
+      apps = lib.mapAttrs (_: value: value.apps) systemOutputs;
+      devShells = lib.mapAttrs (_: value: { default = value.devShell; }) systemOutputs;
     };
 }
