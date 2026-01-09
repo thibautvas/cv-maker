@@ -1,5 +1,8 @@
 name: build cv
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
@@ -26,6 +29,6 @@ jobs:
           tag_name: latest
           name: latest cv
           files: output/cv_thibautvas.pdf
-          overwrite: true
+          overwrite_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
