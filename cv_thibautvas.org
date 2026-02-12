@@ -1,0 +1,84 @@
+#+title: cv-maker
+#+startup: content
+
+:latex_options:
+#+options: title:nil date:nil toc:nil
+#+latex_class: article
+#+latex_class_options: [10pt]
+#+latex_header: \pagestyle{empty}
+#+latex_header: \usepackage[left=1.5cm,top=0.5cm,right=1.5cm,bottom=0.2cm,nohead,nofoot]{geometry}
+#+latex_header: \usepackage{lmodern}
+#+latex_header: \usepackage{fontawesome}
+
+#+latex_header: \usepackage{titlesec}
+#+latex_header: \titleformat{\section}{\Large\scshape}{}{0em}{}[\titlerule]
+#+latex_header: \titleformat{\subsection}{\large}{}{0em}{}
+
+#+latex_header: \usepackage{enumitem}
+#+latex_header: \setlist[itemize,1]{leftmargin=*,label=,itemsep=0pt}
+#+latex_header: \setlist[itemize,2]{leftmargin=*,label=-,itemsep=0pt}
+
+#+latex_header: \hypersetup{pdfborderstyle={/S/U/W 1}, urlbordercolor={0 0 0}}
+
+#+macro: name @@latex:{\Huge $1}@@
+#+macro: date @@latex:\hfill $1@@
+#+macro: sep @@latex:\hspace{0.2em}\large\textperiodcentered\hspace{0.2em}@@
+#+macro: icon-text @@latex:\fa$1{} $2@@
+#+macro: icon-link @@latex:\fa$1{}~\href{$2}{$3}@@
+:END:
+
+:contact_info:
+#+begin_center
+{{{name(Thibaut Vas)}}}
+#+end_center
+
+#+begin_center
+{{{icon-text(Phone,+33 x xx xx xx xx)}}}
+{{{sep}}}
+{{{icon-link(Envelope,mailto:thibaut.vas@gmail.com,thibaut.vas@gmail.com)}}}
+{{{sep}}}
+{{{icon-text(Home, Barcelona\, Spain)}}}
+#+end_center
+
+#+begin_center
+{{{icon-link(LinkedinSquare,https://www.linkedin.com/in/xxxxxxx-xxx-xxxxx,LinkedIn)}}}
+{{{sep}}}
+{{{icon-link(Github,https://github.com/thibautvas,GitHub)}}}
+#+end_center
+:END:
+
+* Work Experience
+** *Company 1*, Barcelona - 5 years {{{date(2021-2025)}}}
+- Fancy job title
+- An awesome project
+  - Subtask 1
+  - Subtask 2
+  - Subtask 3
+- Another awesome project
+- Yet another awesome project
+
+** *Company 2*, Barcelona - 6 months {{{date(2020)}}}
+- An underpaid internship
+
+** *Company 3*, Paris - 6 months {{{date(2019)}}}
+- Another one of those
+
+
+* Skills
+- Programming :: Python (incl. data science libraries), SQL, Git
+- Languages :: Native French, Fluent English, Intermediate Spanish
+
+
+* Education
+** *University 1*, Paris {{{date(2016-2021)}}}
+- Master in something smart
+- Relevant Coursework: some relevant stuff
+- Projects: where the real learning happened
+
+** *University 2*, Paris {{{date(2016-2021)}}}
+- Master in something even smarter
+- Relevant Coursework: more relevant stuff
+- Master Thesis: a piece of work
+
+** *University 3*, Paris {{{date(2014-2016)}}}
+- Something French

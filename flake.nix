@@ -20,31 +20,36 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
 
+          texPackages = pkgs.texlive.combine {
+            inherit (pkgs.texlive)
+              scheme-small
+              capt-of
+              enumitem
+              fontawesome
+              titlesec
+              wrapfig
+              ;
+          };
+
           shellApp = pkgs.writeShellApplication {
             name = "mkpdf";
             runtimeInputs = [
-              (pkgs.texlive.combine {
-                inherit (pkgs.texlive)
-                  scheme-small
-                  enumitem
-                  eurosym
-                  fontawesome
-                  ragged2e
-                  titlesec
-                  ;
-              })
+              pkgs.emacs-nox
+              texPackages
             ];
             text = ''
-              input_tex="$1"
-              mkdir -p output
-              pdflatex --output-directory=output "$input_tex"
+              input_org="$1"
+              emacs --batch "$input_org" \
+                --eval "(require 'org)" \
+                --eval "(setq org-latex-pdf-process '(\"pdflatex -interaction nonstopmode %f\"))" \
+                --eval "(org-latex-export-to-pdf)"
             '';
           };
         in
         {
           apps.default = mkApp shellApp;
           devShell = pkgs.mkShell {
-            packages = [ shellApp ];
+            packages = [ texPackages ];
           };
         };
 

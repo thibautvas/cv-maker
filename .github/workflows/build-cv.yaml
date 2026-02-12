@@ -21,14 +21,14 @@ jobs:
         uses: cachix/install-nix-action@v25
 
       - name: build cv pdf
-        run: nix run . -- cv_thibautvas.tex
+        run: nix run . -- cv_thibautvas.org
 
       - name: upload pdf to release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
           name: latest cv
-          files: output/cv_thibautvas.pdf
+          files: cv_thibautvas.pdf
           overwrite_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
