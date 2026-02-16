@@ -11,8 +11,8 @@
 #+latex_header: \usepackage{fontawesome}
 
 #+latex_header: \usepackage{titlesec}
+#+latex_header: \setcounter{secnumdepth}{0}
 #+latex_header: \titleformat{\section}{\Large\scshape}{}{0em}{}[\titlerule]
-#+latex_header: \titleformat{\subsection}{\large}{}{0em}{}
 
 #+latex_header: \usepackage{enumitem}
 #+latex_header: \setlist[itemize,1]{leftmargin=*,label=,itemsep=0pt}
@@ -21,8 +21,8 @@
 #+latex_header: \hypersetup{pdfborderstyle={/S/U/W 1}, urlbordercolor={0 0 0}}
 
 #+macro: name @@latex:{\Huge $1}@@
-#+macro: date @@latex:\hfill $1@@
 #+macro: sep @@latex:\hspace{0.2em}\large\textperiodcentered\hspace{0.2em}@@
+#+macro: time-range @@latex:{\mdseries - $1 \hfill $2}@@
 #+macro: icon-text @@latex:\fa$1{} $2@@
 #+macro: icon-link @@latex:\fa$1{}~\href{$2}{$3}@@
 :END:
@@ -48,8 +48,7 @@
 :END:
 
 * Work Experience
-** *Company 1*, Barcelona - 5 years {{{date(2021-2025)}}}
-- Fancy job title
+** Product Data Scientist, Company 1 {{{time-range(5 years,2021-2025)}}}
 - An awesome project
   - Subtask 1
   - Subtask 2
@@ -57,28 +56,30 @@
 - Another awesome project
 - Yet another awesome project
 
-** *Company 2*, Barcelona - 6 months {{{date(2020)}}}
+** Data Science and Analytics Intern, Company 2 {{{time-range(6 months,2020)}}}
 - An underpaid internship
 
-** *Company 3*, Paris - 6 months {{{date(2019)}}}
+** Risk Modeler and Financial Analyst Intern, Company 3 {{{time-range(6 months,2019)}}}
 - Another one of those
 
 
 * Skills
-- Programming :: Python (incl. data science libraries), SQL, Git
-- Languages :: Native French, Fluent English, Intermediate Spanish
+** Programming
+| Languages               | Bash, Nix, Python, SQL.                                                             |
+| Operating Systems       | Linux (NixOS, RHEL), systemd, configuration management, reproducible environments.  |
+| Data & ML pipelines     | ETL, dbt transformations, ML experimentation, feature engineering, A/B testing.     |
+| Containers & Deployment | Nix flakes, Docker, Flask app deployment, CI/CD pipelines (GitHub actions).         |
+| Version Control         | Git, including advanced and collaborative workflows (branching, merging, rebasing). |
+
+** Languages
+Native French, Fluent English, Intermediate Spanish.
 
 
 * Education
-** *University 1*, Paris {{{date(2016-2021)}}}
-- Master in something smart
+** Master of Science in Statistics and Data Science, University 1
 - Relevant Coursework: some relevant stuff
 - Projects: where the real learning happened
 
-** *University 2*, Paris {{{date(2016-2021)}}}
-- Master in something even smarter
+** Master in Management, University 2
 - Relevant Coursework: more relevant stuff
 - Master Thesis: a piece of work
-
-** *University 3*, Paris {{{date(2014-2016)}}}
-- Something French
