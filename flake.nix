@@ -22,12 +22,8 @@
 
           texPackages = pkgs.texlive.combine {
             inherit (pkgs.texlive)
-              scheme-basic
+              scheme-medium
               capt-of
-              enumitem
-              fontawesome
-              titlesec
-              ulem
               wrapfig
               ;
           };
